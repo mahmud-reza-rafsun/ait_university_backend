@@ -2,7 +2,9 @@ import { TaskType } from "@prisma/client";
 
 export interface TCreateTask {
     title: string;
-    description: string;
+    topic: string;
+    question: string;
+    description?: string;
     type?: TaskType;
     points?: number;
     lessonId: string;

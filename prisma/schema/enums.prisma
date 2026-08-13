@@ -84,3 +84,10 @@ enum TaskType {
     PRACTICE
     PROJECT
 }
+
+enum TaskSubmissionStatus {
+    PENDING
+    SUBMITTED
+    REVIEWED
+    REJECTED
+}
