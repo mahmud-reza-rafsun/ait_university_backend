@@ -1,0 +1,23 @@
+model Subject {
+    id           String   @id @default(uuid())
+    title        String
+    description  String
+    thumbnail    String?
+    rating       Float    @default(0)
+    price        Float
+    durationDays Int      @default(180)
+    isPublished  Boolean  @default(false)
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    professorId String
+    professor   User   @relation(fields: [professorId], references: [id])
+
+    lessons      Lesson[]
+    enrollments  Enrollment[]
+    weeklyExams  WeeklyExam[]
+    certificates Certificate[]
+    payments     Payment[]
+
+    @@map("subject")
+}

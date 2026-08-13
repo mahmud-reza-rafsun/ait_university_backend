@@ -1,0 +1,14 @@
+model CreditTransaction {
+    id     String            @id @default(uuid())
+    amount Int
+    type   TransactionType
+    reason TransactionReason
+
+    createdAt DateTime @default(now())
+
+    creditId String
+    credit   Credit @relation(fields: [creditId], references: [id])
+
+    @@index([creditId])
+    @@map("credit_transaction")
+}

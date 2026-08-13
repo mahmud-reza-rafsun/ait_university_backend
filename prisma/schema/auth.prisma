@@ -1,0 +1,85 @@
+model User {
+    id                 String     @id @default(uuid())
+    studentId          String?    @unique
+    name               String
+    email              String     @unique
+    emailVerified      Boolean    @default(false)
+    role               Role       @default(STUDENT)
+    status             UserStatus @default(ACTIVE)
+    needPasswordChange Boolean    @default(false)
+    isDeleted          Boolean    @default(false)
+    deletedAt          DateTime?
+
+    photo       String?
+    coverPhoto  String?
+    gender      String?
+    phoneNumber String?
+    country     String?
+    address     String?
+    city        String?
+    description String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    credit           Credit[]
+    enrollments      Enrollment[]
+    lessonProgresses LessonProgress[]
+    taskSubmissions  TaskSubmission[]
+    attendances      Attendance[]
+    subjects         Subject[]
+    payments         Payment[]
+    examSubmissions  ExamSubmission[]
+    certificates     Certificate[]
+    sessions         Session[]
+    accounts         Account[]
+
+    @@map("user")
+}
+
+model Session {
+    id        String   @id @default(uuid())
+    expiresAt DateTime
+    token     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    ipAddress String?
+    userAgent String?
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+    @@map("session")
+}
+
+model Account {
+    id                    String    @id @default(uuid())
+    accountId             String
+    providerId            String
+    userId                String
+    user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    accessToken           String?
+    refreshToken          String?
+    idToken               String?
+    accessTokenExpiresAt  DateTime?
+    refreshTokenExpiresAt DateTime?
+    scope                 String?
+    password              String?
+    createdAt             DateTime  @default(now())
+    updatedAt             DateTime  @updatedAt
+
+    @@index([userId])
+    @@map("account")
+}
+
+model Verification {
+    id         String   @id @default(uuid())
+    identifier String
+    value      String
+    expiresAt  DateTime
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@index([identifier])
+    @@map("verification")
+}

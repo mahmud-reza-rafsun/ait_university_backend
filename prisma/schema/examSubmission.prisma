@@ -1,0 +1,21 @@
+model ExamSubmission {
+    id           String    @id @default(uuid())
+    obtainedMark Int       @default(0)
+    isEvaluated  Boolean   @default(false)
+    feedback     String?
+    grade        String?
+    submittedAt  DateTime  @default(now())
+    evaluatedAt  DateTime?
+
+    studentId String
+    student   User   @relation(fields: [studentId], references: [id])
+
+    weeklyExamId String
+    weeklyExam   WeeklyExam @relation(fields: [weeklyExamId], references: [id])
+
+    answers ExamAnswer[]
+
+    @@unique([studentId, weeklyExamId])
+    @@index([studentId, weeklyExamId])
+    @@map("exam_submission")
+}

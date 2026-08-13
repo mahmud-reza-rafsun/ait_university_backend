@@ -1,0 +1,17 @@
+model Certificate {
+    id            String            @id @default(uuid())
+    certificateNo String            @unique @default(cuid())
+    issueDate     DateTime          @default(now())
+    status        CertificateStatus @default(ISSUED)
+    pdfUrl        String?
+
+    studentId String
+    student   User   @relation(fields: [studentId], references: [id])
+
+    subjectId String
+    subject   Subject @relation(fields: [subjectId], references: [id])
+
+    @@unique([studentId, subjectId])
+    @@index([studentId, subjectId])
+    @@map("certificate")
+}

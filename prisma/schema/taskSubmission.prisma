@@ -1,0 +1,20 @@
+model TaskSubmission {
+    id      String       @id @default(uuid())
+    answer  String?
+    fileUrl String?
+    status  SubmitStatus @default(PENDING)
+
+    submittedAt DateTime?
+    reviewedAt  DateTime?
+    feedback    String?
+
+    studentId String
+    student   User   @relation(fields: [studentId], references: [id])
+
+    taskId String
+    task   Task   @relation(fields: [taskId], references: [id])
+
+    @@unique([studentId, taskId])
+    @@index([studentId, taskId])
+    @@map("task_submission")
+}

@@ -1,0 +1,23 @@
+model Lesson {
+    id         String  @id @default(uuid())
+    title      String
+    topic      String
+    content    String
+    summary    String?
+    examples   String
+    order      Int
+    releaseDay Int
+
+    subjectId String
+    subject   Subject @relation(fields: [subjectId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    tasks       Task[]
+    progresses  LessonProgress[]
+    attendances Attendance[]
+
+    @@index([subjectId])
+    @@map("lesson")
+}

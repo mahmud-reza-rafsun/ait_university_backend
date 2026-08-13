@@ -1,0 +1,15 @@
+model Attendance {
+    id     String           @id @default(uuid())
+    date   DateTime         @default(now())
+    status AttendanceStatus @default(ABSENT)
+
+    studentId String
+    student   User   @relation(fields: [studentId], references: [id])
+
+    lessonId String
+    lesson   Lesson @relation(fields: [lessonId], references: [id])
+
+    @@unique([studentId, lessonId])
+    @@index([studentId, lessonId])
+    @@map("attendance")
+}

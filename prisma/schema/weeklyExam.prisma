@@ -1,0 +1,18 @@
+model WeeklyExam {
+    id          String   @id @default(uuid())
+    title       String
+    description String?
+    weekNumber  Int
+    totalMarks  Int      @default(100)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    subjectId String
+    subject   Subject @relation(fields: [subjectId], references: [id])
+
+    questions   ExamQuestion[]
+    submissions ExamSubmission[]
+
+    @@index([subjectId])
+    @@map("weekly_exam")
+}

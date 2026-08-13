@@ -1,0 +1,17 @@
+model LessonProgress {
+    id     String       @id @default(uuid())
+    status LessonStatus @default(LOCKED)
+
+    unlockedAt  DateTime?
+    completedAt DateTime?
+
+    studentId String
+    student   User   @relation(fields: [studentId], references: [id])
+
+    lessonId String
+    lesson   Lesson @relation(fields: [lessonId], references: [id])
+
+    @@unique([studentId, lessonId])
+    @@index([studentId, lessonId])
+    @@map("lesson_progress")
+}

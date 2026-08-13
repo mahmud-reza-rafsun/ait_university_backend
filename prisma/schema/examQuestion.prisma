@@ -1,0 +1,12 @@
+model ExamQuestion {
+    id       String @id @default(uuid())
+    question String
+
+    weeklyExamId String
+    weeklyExam   WeeklyExam @relation(fields: [weeklyExamId], references: [id])
+
+    answers ExamAnswer[]
+
+    @@index([weeklyExamId])
+    @@map("exam_question")
+}

@@ -1,0 +1,12 @@
+model ExamAnswer {
+    id     String @id @default(uuid())
+    answer String
+
+    examSubmissionId String
+    examSubmission   ExamSubmission @relation(fields: [examSubmissionId], references: [id])
+
+    questionId String
+    question   ExamQuestion @relation(fields: [questionId], references: [id])
+
+    @@map("exam_answer")
+}

@@ -1,0 +1,15 @@
+model CreditPackage {
+    id           String   @id @default(uuid())
+    name         String
+    creditAmount Int
+    price        Float
+    currency     Currency @default(BDT)
+    isActive     Boolean  @default(true)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    payments Payment[]
+
+    @@map("credit_package")
+}

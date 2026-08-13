@@ -1,0 +1,79 @@
+enum Role {
+    SUPER_ADMIN
+    PROFESSOR
+    STUDENT
+    ADMINISTRATOR
+}
+
+enum UserStatus {
+    ACTIVE
+    INACTIVE
+    SUSPENDED
+}
+
+enum AttendanceStatus {
+    PRESENT
+    ABSENT
+    LEAVE
+}
+
+enum SubmitStatus {
+    PENDING
+    SUBMITTED
+    SKIPPED
+    REVIEWED
+}
+
+enum TransactionType {
+    CREDIT
+    DEBIT
+}
+
+enum EnrollmentStatus {
+    ACTIVE
+    EXPIRED
+    COMPLETED
+}
+
+enum LessonStatus {
+    LOCKED
+    UNLOCKED
+    COMPLETED
+}
+
+enum PaymentMethod {
+    STRIPE
+    BKASH
+}
+
+enum PaymentType {
+    SUBJECT_ADMISSION
+    CREDIT_PURCHASE
+}
+
+enum PaymentStatus {
+    PENDING
+    SUCCESS
+    FAILED
+    REFUNDED
+}
+
+enum Currency {
+    BDT
+    USD
+    EUR
+}
+
+enum TransactionReason {
+    ENROLLMENT
+    ABSENT_LEAVE
+    PURCHASE
+    BONUS
+    REFUND
+}
+
+enum CertificateStatus {
+    PENDING
+    ISSUED
+    REVOKED
+}
