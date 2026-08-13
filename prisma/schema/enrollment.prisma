@@ -1,6 +1,6 @@
 model Enrollment {
     id             String           @id @default(uuid())
-    registrationNo String           @unique @default(cuid())
+    registrationNo String           @unique @default(uuid())
     status         EnrollmentStatus @default(ACTIVE)
 
     enrolledAt DateTime @default(now())
