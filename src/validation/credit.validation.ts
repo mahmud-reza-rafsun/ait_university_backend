@@ -1,29 +1,27 @@
 import { z } from "zod";
 
-const purchaseCreditSchema = z.object({
-    body: z.object({
-        packageId: z.string().min(1, "Package ID is required"),
-        paymentMethod: z.enum(["STRIPE", "BKASH"], {
-            message: "Payment method must be STRIPE or BKASH",
-        }),
-    }),
-});
-
 const absentLeaveSchema = z.object({
     body: z.object({
-        lessonId: z.string().min(1, "Lesson ID is required"), // 👈 attendanceId remove
+        lessonId: z.string({
+            message: "Lesson ID is required",
+        }),
     }),
 });
 
 const addCreditManuallySchema = z.object({
     body: z.object({
-        userId: z.string().min(1, "User ID is required"),
-        amount: z.number().min(1, "Amount must be at least 1"),
+        userId: z.string({
+            message: "User ID is required",
+        }),
+        amount: z
+            .number({
+                message: "Amount is required",
+            })
+            .positive("Amount must be a positive number"),
     }),
 });
 
 export const creditValidation = {
-    purchaseCreditSchema,
     absentLeaveSchema,
     addCreditManuallySchema,
 };

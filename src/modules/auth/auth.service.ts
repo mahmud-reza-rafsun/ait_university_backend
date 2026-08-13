@@ -8,6 +8,7 @@ import { AppError } from "../../ErrorHandler/AppError";
 import { tokenUtils } from "../../utils/token";
 import { jwtUtils } from "../../utils/jwt";
 import { IChangePasswordPayload, ILoginUserPayload, IRegisterUserPayload, IRequestUser, ISocialLoginSession, IUpdateUserPayload } from "../../interface/auth.interface";
+import { Role, TransactionReason, TransactionType } from "@prisma/client";
 
 const buildTokenPayload = (user: {
   id: string;
@@ -33,9 +34,7 @@ const registerUser = async (payload: IRegisterUserPayload) => {
 
   if (email) {
     const existingUser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
+      where: { email },
     });
 
     if (existingUser) {
@@ -58,6 +57,31 @@ const registerUser = async (payload: IRegisterUserPayload) => {
   }
 
   try {
+    if (data.user.role === Role.STUDENT) {
+      const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
+      const generatedStudentId = `ait-${randomNumber}`;
+
+      await prisma.user.update({
+        where: { id: data.user.id },
+        data: { studentId: generatedStudentId },
+      });
+
+      await prisma.credit.create({
+        data: {
+          userId: data.user.id,
+          totalCredit: 100,
+          usedCredit: 0,
+          transactions: {
+            create: {
+              amount: 100,
+              type: TransactionType.CREDIT,
+              reason: TransactionReason.BONUS,
+            },
+          },
+        },
+      });
+    }
+
     const accessToken = tokenUtils.getAccessToken({
       userId: data.user.id,
       role: data.user.role,
@@ -88,16 +112,12 @@ const registerUser = async (payload: IRegisterUserPayload) => {
     };
   } catch (error) {
     await prisma.user.delete({
-      where: {
-        id: data.user.id,
-      },
+      where: { id: data.user.id },
     });
-
 
     throw error;
   }
-
-}
+};
 
 const loginUser = async (payload: ILoginUserPayload) => {
   const { email, password } = payload;

@@ -11,7 +11,7 @@ const getMyCredit = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, {
         status: httpStatus.OK,
         success: true,
-        message: "Credit fetched successfully",
+        message: "Credit details fetched successfully",
         data: result,
     });
 });

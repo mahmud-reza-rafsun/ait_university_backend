@@ -2,8 +2,8 @@ import { Role } from "@prisma/client";
 import { Router } from "express";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { validateRequest } from "../../middlewares/validateRequest";
-import { creditValidation } from "../../validation/credit.validation";
 import { creditController } from "./credit.controller";
+import { creditValidation } from "../../validation/credit.validation";
 
 const router = Router();
 
@@ -33,7 +33,7 @@ router.post(
 );
 
 router.post(
-    "/add",
+    "/add-manually",
     checkAuth(Role.SUPER_ADMIN, Role.ADMINISTRATOR),
     validateRequest(creditValidation.addCreditManuallySchema),
     creditController.addCreditManually,
