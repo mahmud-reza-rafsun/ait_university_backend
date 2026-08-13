@@ -77,3 +77,10 @@ enum CertificateStatus {
     ISSUED
     REVOKED
 }
+
+enum TaskType {
+    ASSIGNMENT
+    QUIZ
+    PRACTICE
+    PROJECT
+}
