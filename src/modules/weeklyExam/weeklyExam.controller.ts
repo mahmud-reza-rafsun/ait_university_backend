@@ -65,11 +65,22 @@ const evaluateSubmission = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+const getAllExams = catchAsync(async (req: Request, res: Response) => {
+    const result = await weeklyExamService.getAllExams(req.query);
+
+    sendResponse(res, {
+        status: httpStatus.OK,
+        success: true,
+        message: "All weekly exams fetched successfully",
+        data: result,
+    });
+});
 
 export const weeklyExamController = {
     createWeeklyExam,
     getExamsBySubject,
     getSingleExam,
     submitExam,
+    getAllExams,
     evaluateSubmission,
 };

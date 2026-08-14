@@ -57,6 +57,43 @@ const getSingleExam = async (id: string) => {
     return exam;
 };
 
+const getAllExams = async (query: {
+    subjectId?: string;
+    searchTerm?: string;
+}) => {
+    const { subjectId, searchTerm } = query;
+
+    return await prisma.weeklyExam.findMany({
+        where: {
+            ...(subjectId && { subjectId }),
+            ...(searchTerm && {
+                OR: [
+                    { title: { contains: searchTerm, mode: "insensitive" } },
+                    { description: { contains: searchTerm, mode: "insensitive" } },
+                ],
+            }),
+        },
+        include: {
+            subject: {
+                select: {
+                    id: true,
+                    title: true,
+                    description: true,
+                },
+            },
+            _count: {
+                select: {
+                    questions: true,
+                    submissions: true,
+                },
+            },
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+};
+
 // 4. Submit Exam Answers (Student)
 const submitExam = async (studentId: string, payload: TSubmitExam) => {
     const { weeklyExamId, answers } = payload;
@@ -127,6 +164,7 @@ const evaluateSubmission = async (
 export const weeklyExamService = {
     createWeeklyExam,
     getExamsBySubject,
+    getAllExams,
     getSingleExam,
     submitExam,
     evaluateSubmission,

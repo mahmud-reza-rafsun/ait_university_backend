@@ -23,6 +23,19 @@ router.post(
     weeklyExamController.submitExam,
 );
 
+// 5. Dynamic Single Exam ID Route (MUST be at the bottom)
+router.get(
+    "/get-all-exam",
+    checkAuth(Role.STUDENT, Role.PROFESSOR, Role.SUPER_ADMIN, Role.ADMINISTRATOR),
+    weeklyExamController.getSingleExam,
+);
+
+router.get(
+    "/get-all-exams",
+    checkAuth(Role.PROFESSOR, Role.SUPER_ADMIN, Role.ADMINISTRATOR),
+    weeklyExamController.getAllExams,
+);
+
 // 3. Get Exams by Subject ID
 router.get(
     "/subject/:subjectId",
@@ -36,13 +49,6 @@ router.patch(
     checkAuth(Role.PROFESSOR, Role.SUPER_ADMIN, Role.ADMINISTRATOR),
     validateRequest(weeklyExamValidation.evaluateSubmissionSchema),
     weeklyExamController.evaluateSubmission,
-);
-
-// 5. Dynamic Single Exam ID Route (MUST be at the bottom)
-router.get(
-    "exam/:id",
-    checkAuth(Role.STUDENT, Role.PROFESSOR, Role.SUPER_ADMIN, Role.ADMINISTRATOR),
-    weeklyExamController.getSingleExam,
 );
 
 export const weeklyExamRoutes = router;
