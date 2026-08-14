@@ -7,6 +7,7 @@ import { lessonRoutes } from "../modules/lesson/lesson.routes";
 import { taskRoutes } from "../modules/task/task.routes";
 import { submissionRoutes } from "../modules/submission/submission.routes";
 import { analyticsRoutes } from "../modules/analytics/analytics.routes";
+import { weeklyExamRoutes } from "../modules/weeklyExam/weeklyExam.routes";
 
 const router = Router();
 
@@ -18,6 +19,7 @@ router.use("/lesson", lessonRoutes);
 router.use("/task", taskRoutes);
 router.use("/submission", submissionRoutes);
 router.use("/analytics", analyticsRoutes);
+router.use("/weekly-exams", weeklyExamRoutes);
 
 
 export const apiRoutes = router;
