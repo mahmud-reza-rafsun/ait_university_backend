@@ -6,6 +6,7 @@ import { enrollmentRoutes } from "../modules/enrollment/enrollment.routes";
 import { lessonRoutes } from "../modules/lesson/lesson.routes";
 import { taskRoutes } from "../modules/task/task.routes";
 import { submissionRoutes } from "../modules/submission/submission.routes";
+import { analyticsRoutes } from "../modules/analytics/analytics.routes";
 
 const router = Router();
 
@@ -16,6 +17,7 @@ router.use("/enrollment", enrollmentRoutes);
 router.use("/lesson", lessonRoutes);
 router.use("/task", taskRoutes);
 router.use("/submission", submissionRoutes);
+router.use("/analytics", analyticsRoutes);
 
 
 export const apiRoutes = router;
