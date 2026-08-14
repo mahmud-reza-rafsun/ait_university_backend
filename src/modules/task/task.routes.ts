@@ -36,7 +36,7 @@ router.get(
 );
 
 router.post(
-    "/:id/submit",
+    "/submit/:id",
     checkAuth(Role.STUDENT),
     validateRequest(taskValidation.submitTaskSchema),
     taskController.submitTask,
