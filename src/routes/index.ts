@@ -5,6 +5,7 @@ import { subjectRoutes } from "../modules/subject/subject.routes";
 import { enrollmentRoutes } from "../modules/enrollment/enrollment.routes";
 import { lessonRoutes } from "../modules/lesson/lesson.routes";
 import { taskRoutes } from "../modules/task/task.routes";
+import { submissionRoutes } from "../modules/submission/submission.routes";
 
 const router = Router();
 
@@ -14,6 +15,7 @@ router.use("/subject", subjectRoutes);
 router.use("/enrollment", enrollmentRoutes);
 router.use("/lesson", lessonRoutes);
 router.use("/task", taskRoutes);
+router.use("/submission", submissionRoutes);
 
 
 export const apiRoutes = router;
