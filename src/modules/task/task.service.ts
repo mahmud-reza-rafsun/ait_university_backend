@@ -1,8 +1,6 @@
-import { TaskSubmissionStatus } from "@prisma/client";
 import { prisma } from "../../database/prisma";
 import { TCreateTask, TSubmitTask, TUpdateTask } from "../../interface/task.interface";
 
-// Admin / Professor Operations
 const createTask = async (payload: TCreateTask) => {
     const lesson = await prisma.lesson.findUnique({
         where: { id: payload.lessonId },
@@ -16,7 +14,6 @@ const createTask = async (payload: TCreateTask) => {
         data: {
             question: payload.question,
             description: payload.description,
-            type: payload.type,
             points: payload.points,
             lessonId: payload.lessonId,
         },
@@ -52,7 +49,6 @@ const deleteTask = async (id: string) => {
     });
 };
 
-// Student Operations
 const getTasksByLesson = async (lessonId: string, studentId: string) => {
     const tasks = await prisma.task.findMany({
         where: { lessonId },
@@ -102,17 +98,16 @@ const submitTask = async (taskId: string, studentId: string, payload: TSubmitTas
             },
         },
         update: {
-            submissionUrl: payload.submissionUrl,
-            notes: payload.notes,
-            status: TaskSubmissionStatus.SUBMITTED,
+            answer: payload.answer,
+            fileUrl: payload.fileUrl,
             submittedAt: new Date(),
         },
         create: {
             studentId,
             taskId,
-            submissionUrl: payload.submissionUrl,
-            notes: payload.notes,
-            status: TaskSubmissionStatus.SUBMITTED,
+            answer: payload.answer,
+            fileUrl: payload.fileUrl,
+            submittedAt: new Date(),
         },
     });
 };
